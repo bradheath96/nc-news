@@ -5,7 +5,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import CardActionArea from "@mui/material/CardActionArea";
 import Box from "@mui/material/Box";
-
+import { Link } from "react-router-dom";
 
 const ArticleCards = ({ articles }) => {
 	return (
@@ -19,33 +19,37 @@ const ArticleCards = ({ articles }) => {
 					alignContent: "space-around",
 					gap: 2,
 				}}>
-                {articles.map((article) => (
-                    <Card
-                        sx={{
-                            minWidth: 340,
-                            maxWidth: 340,
-                            maxHeight: 300,
-                            minHeight: 300,
-                        }}
-                        key={article.title}
-                        className="article-cards">
-                        <CardActionArea>
-                            <CardMedia
-                                component="img"
-                                sx={{ height: 140 }}
-                                image={article.article_img_url}
-                            />
-                            <CardContent>
-                                <Typography gutterBottom variant="h5" component="div">
-                                    {article.title}
-                                </Typography>
-                                <Typography variant="body2" color="text.secondary">
-                                    Author: {article.author}
-                                </Typography>
-                            </CardContent>
-                        </CardActionArea>
-                    </Card>
-                ))}
+				{articles.map((article) => (
+					<Card
+						sx={{
+							minWidth: 340,
+							maxWidth: 340,
+							maxHeight: 300,
+							minHeight: 300,
+						}}
+						key={article.title}
+						className="article-cards">
+						<Link
+							to={`/articles/${article.article_id}`}
+							style={{ textDecoration: "none", color: "inherit" }}>
+							<CardActionArea>
+								<CardMedia
+									component="img"
+									sx={{ height: 140 }}
+									image={article.article_img_url}
+								/>
+								<CardContent>
+									<Typography gutterBottom variant="h5" component="div">
+										{article.title}
+									</Typography>
+									<Typography variant="body2" color="text.secondary">
+										Author: {article.author}
+									</Typography>
+								</CardContent>
+							</CardActionArea>
+						</Link>
+					</Card>
+				))}
 			</Box>
 		</div>
 	);
