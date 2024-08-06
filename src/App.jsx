@@ -10,7 +10,8 @@ function App() {
 		<div>
 			<Header />
 			<Routes>
-				<Route path="/*" element={<Container />} />
+				<Route path="/home" element={<Home />} />
+				<Route path="/" element={<Home />} />
 			</Routes>
 		</div>
 	);

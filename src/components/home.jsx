@@ -1,12 +1,22 @@
-import ArticleCards from "./Articles_cards"
+import ArticleCards from "./Articles_cards";
+import { useState, useEffect } from "react";
+import { getArticles } from "../utils/api";
 
-const Home = ({ articles, setArticles }) => {
-    return (
-        <div>
-            <h1>Latest News:</h1>
-            <ArticleCards articles={articles}/>
-        </div>
-    )
-}
+const Home = () => {
+	const [articles, setArticles] = useState([]);
 
-export default Home
+	useEffect(() => {
+        getArticles().then((response) => {
+			setArticles(response); 
+		});
+    }, []);
+    
+	return (
+		<div>
+			<h1>Latest News:</h1>
+			<ArticleCards articles={articles} />
+		</div>
+	);
+};
+
+export default Home;
