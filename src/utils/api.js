@@ -10,6 +10,12 @@ export const getArticles = () => {
 	});
 };
 
+export const getArticle = (article_id) => {
+	return newsAPI.get(`/articles/${article_id}`).then((res) => {
+		return res.data;
+	});
+};
+
 export const getTopics = () => {
     return newsAPI.get("/topics").then((response) => {
 		return response.data;
