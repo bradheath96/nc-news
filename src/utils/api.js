@@ -23,7 +23,13 @@ export const getArticleComments = (article_id) => {
 };
 
 export const getTopics = () => {
-    return newsAPI.get("/topics").then((response) => {
-		return response.data;
+    return newsAPI.get("/topics").then((res) => {
+		return res.data;
 	});
 };
+
+export const patchArticleById = (article_id, patchBody) => {
+	return newsAPI.patch(`/articles/${article_id}`, patchBody).then((res) => {
+		return res.data
+	})
+}
