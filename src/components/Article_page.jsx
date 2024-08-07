@@ -1,23 +1,32 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { getArticle } from "../utils/api";
+import { getArticle, getArticleComments } from "../utils/api";
 import Image from "react-bootstrap/Image";
-import { getArticles } from "../utils/api";
 import Spinner from "react-bootstrap/Spinner";
 import { dateConverter } from "../utils/functions";
+import CommentCard from "./Comment_cards";
 
 
 const ArticlePage = () => {
 	const { article_id } = useParams();
 	const [article, setArticle] = useState({});
+	const [comments, setComments] = useState([])
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		getArticle(article_id).then((article) => {
 			setArticle(article);
-			setLoading(false);
+			
 		});
 	}, [article_id]);
+
+	useEffect(() => {
+		getArticleComments(article_id).then((comments) => {
+			setComments(comments.comments)
+			setLoading(false);
+		})
+	}, [article_id]);
+
 
 	if (loading) {
 		return (
@@ -27,7 +36,7 @@ const ArticlePage = () => {
 			</div>
 		);
 	}
-
+	
 	return (
 		<div>
 			<h1>{article.title}</h1>
@@ -39,8 +48,13 @@ const ArticlePage = () => {
 				alt={article.title}
 			/>
 			<p>{article.body}</p>
-			<p>Votes: {article.votes}</p>
-			<h4>Comments: {article.comment_count}</h4>
+			<h5>Votes: {article.votes}</h5>
+			<h5>Comments: {article.comment_count}</h5>
+			{comments.map((comment) => {
+				return (
+					<CommentCard comment={comment} key={comment.comment_id}/>
+				)
+			})}
 		</div>
 	);
 };
