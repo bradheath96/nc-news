@@ -6,12 +6,25 @@ import Container from "./components/Container";
 import { UserContext } from "./components/User_Context";
 
 function App() {
-	const { user, setUser } = useContext(UserContext);
+	const { user } = useContext(UserContext);
+	const [topics, setTopics] = useState([]);
+	const [isloading, setIsLoading] = useState(false);
+
 	return (
 		<div>
-			<Header />
+			<Header topics={topics} setTopics={setTopics} />
 			<Routes>
-				<Route path="/*" element={<Container />} />
+				<Route
+					path="/*"
+					element={
+						<Container
+							isloading={isLoading}
+							setIsLoading={setIsLoading}
+							topics={topics}
+							setTopics={setTopics}
+						/>
+					}
+				/>
 			</Routes>
 		</div>
 	);

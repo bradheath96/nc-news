@@ -8,7 +8,7 @@ import { UserContext } from "./User_Context";
 import { useContext } from "react";
 import { capitaliseFirstLetter } from "../utils/functions";
 
-const Header = () => {
+const Header = ({topics, setTopics}) => {
 	const { user, setUser } = useContext(UserContext);
 	const [topics, setTopics] = useState([]);
 
@@ -20,7 +20,7 @@ const Header = () => {
 
 	return (
 		<Navbar>
-			<Navbar.Brand as={Link} to="/home">
+			<Navbar.Brand as={Link} to="/">
 				NC News
 			</Navbar.Brand>
 			<Navbar.Collapse id="responsive-navbar-nav">
