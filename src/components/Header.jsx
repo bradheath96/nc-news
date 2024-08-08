@@ -4,12 +4,12 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import { useEffect, useState } from "react";
 import { getTopics } from "../utils/api";
 import { Link } from "react-router-dom";
-
-const capitaliseFirstLetter = (string) => {
-	return string[0].toUpperCase() + string.slice(1)
-}
+import { UserContext } from "./User_Context";
+import { useContext } from "react";
+import { capitaliseFirstLetter } from "../utils/functions";
 
 const Header = () => {
+	const { user, setUser } = useContext(UserContext);
 	const [topics, setTopics] = useState([]);
 
 	useEffect(() => {
@@ -17,7 +17,7 @@ const Header = () => {
 			setTopics(topics);
 		});
 	}, []);
-	
+
 	return (
 		<Navbar>
 			<Navbar.Brand as={Link} to="/home">
@@ -42,11 +42,11 @@ const Header = () => {
 							All Topics
 						</NavDropdown.Item>
 					</NavDropdown>
-					<Nav.Link as={Link} to="/profile">
-						Profile
+					<Nav.Link as={Link} to="/login">
+						Login
 					</Nav.Link>
-					<Nav.Link as={Link} to="/users">
-						Users
+					<Nav.Link as={Link} to="/my-account">
+						My Account
 					</Nav.Link>
 				</Nav>
 			</Navbar.Collapse>

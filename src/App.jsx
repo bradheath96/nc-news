@@ -1,15 +1,18 @@
+import { useContext } from "react";
 import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
-import Container from "./components/Container";
-import Home from "./components/home";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./css/index.css";
+import Container from "./components/Container";
+import { UserContext } from "./components/User_Context";
 
 function App() {
+	const { user, setUser } = useContext(UserContext);
 	return (
 		<div>
 			<Header />
-			<Container />
+			<Routes>
+				<Route path="/*" element={<Container />} />
+			</Routes>
 		</div>
 	);
 }

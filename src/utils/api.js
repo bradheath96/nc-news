@@ -23,13 +23,30 @@ export const getArticleComments = (article_id) => {
 };
 
 export const getTopics = () => {
-    return newsAPI.get("/topics").then((res) => {
+	return newsAPI.get("/topics").then((res) => {
+		return res.data;
+	});
+};
+
+export const getUsers = () => {
+	return newsAPI.get("/users").then((res) => {
 		return res.data;
 	});
 };
 
 export const patchArticleById = (article_id, patchBody) => {
 	return newsAPI.patch(`/articles/${article_id}`, patchBody).then((res) => {
-		return res.data
-	})
-}
+		return res.data;
+	});
+};
+
+export const postComment = (article_id, postBody) => {
+	return newsAPI
+		.post(`/articles/${article_id}/comments`, postBody)
+		.then((res) => {
+			return res.data
+		})
+		.catch((err) => {
+			console.log(err, "<<< error ")
+		});
+};
