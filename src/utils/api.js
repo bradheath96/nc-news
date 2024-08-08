@@ -44,9 +44,18 @@ export const postComment = (article_id, postBody) => {
 	return newsAPI
 		.post(`/articles/${article_id}/comments`, postBody)
 		.then((res) => {
+			console.log(res, "<<< from API");
 			return res.data
 		})
 		.catch((err) => {
 			console.log(err, "<<< error ")
 		});
 };
+
+export const deleteComment = (comment_id) => {
+	return newsAPI.delete(`/comments/${comment_id}`)
+		.then((res) => {
+			console.log(res)
+			console.log(`Delete comment ${comment_id}`)
+		});
+}

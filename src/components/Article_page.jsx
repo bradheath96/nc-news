@@ -93,7 +93,7 @@ const ArticlePage = () => {
 			<CommentAdder setComments={setComments} article_id={article_id} />
 			<h5>Comments: {article.comment_count}</h5>
 			{comments.map((comment) => {
-				return <CommentCard comment={comment} key={comment.comment_id} />;
+				return <CommentCard comment={comment} key={comment.comment_id} user={user} />;
 			})}
 		</div>
 	);

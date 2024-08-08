@@ -9,7 +9,7 @@ import { postComment } from "../utils/api";
 import { UserContext } from "./User_Context";
 
 const CommentAdder = ({ setComments, article_id }) => {
-	const { user } = useContext(UserContext);
+	const { user, setUser } = useContext(UserContext);
 	const [newComment, setNewComment] = useState("");
 	const [err, setErr] = useState("");
 
@@ -32,6 +32,7 @@ const CommentAdder = ({ setComments, article_id }) => {
 			body: newComment,
 		};
 
+		
 		postComment(article_id, postBody).then((newCommentFromApi) => {
 			setNewComment("");
 			setComments((comments) => {
@@ -63,9 +64,18 @@ const CommentAdder = ({ setComments, article_id }) => {
 					onChange={handleChange}
 				/>
 			</div>
-			<Button variant="contained" type="submit" endIcon={<SendIcon />}>
-				Comment
-			</Button>
+			{user && newComment.length ? (
+				<Button variant="contained" type="submit" endIcon={<SendIcon />}>
+					Comment
+				</Button>
+			) : (
+				<div>
+					<Button variant="outlined" disabled endIcon={<SendIcon />}>
+						Comment
+					</Button>
+				</div>
+			)}
+			{!user ? <Alert sx={{maxWidth: 300}} severity="info">Please log in to comment</Alert> : null}
 		</Box>
 	);
 };

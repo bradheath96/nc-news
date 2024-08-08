@@ -10,61 +10,69 @@ import { UserContext } from "./User_Context";
 import Alert from "@mui/material/Alert";
 import CheckIcon from "@mui/icons-material/Check";
 import Spinner from "react-bootstrap/Spinner";
+import { Button } from "react-bootstrap";
 
 const Login = () => {
 	const { user, setUser } = useContext(UserContext);
 	const [users, setUsers] = useState([]);
-	const [loading, setLoading] = useState(true);
+	const [usersLoading, setUsersLoading] = useState(true);
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
-	const [selectedUser, setSelectedUser] = useState("");
 
 	useEffect(() => {
 		getUsers().then((users) => {
 			setUsers(users);
-			setLoading(false);
+			setUsersLoading(false);
 		});
 	}, []);
 
-	const handleChange = (event) => {
-		const selectedUser = event.target.value;
-		setSelectedUser(selectedUser);
-		setUser(selectedUser);
+	function handleClick(event) {
+		event.preventDefault();
+		setUser(event.target.innerText);
 		setIsLoggedIn(true);
-	};
+	}
 
-	if (loading) {
-		return (
-			<div className="loading-container">
-				<Spinner animation="border" />
-				<p>Loading Articles...</p>
-			</div>
-		);
+	function handleSignOutClick(event) {
+		setUser("");
+		setIsLoggedIn(false);
 	}
 
 	return (
 		<div>
 			<h1>Login</h1>
-			{isLoggedIn ? (
-				<Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
-					Successfully logged in
-				</Alert>
+			{user ? (
+				<div>
+					<Alert
+						severity="success"
+						style={{ marginBottom: 16, maxWidth: 300 }}>
+						Successfully logged in!
+					</Alert>
+					<Button variant="outlines" onClick={handleSignOutClick}>
+						Sign Out
+					</Button>
+				</div>
 			) : (
 				<div>
 					<p>Select a user</p>
-					<Box sx={{ maxWidth: 250 }}>
-						<FormControl fullWidth>
+
+					<Box sx={{ minWidth: 120 }}>
+						<FormControl sx={{ maxWidth: 500 }} fullWidth>
 							<InputLabel id="username-select-label">Select</InputLabel>
 							<Select
 								labelId="username-select-label"
 								id="username-select"
-								value={selectedUser}
-								label="User"
-								onChange={handleChange}>
-								{users.map((user) => (
-									<MenuItem value={user.username} key={user.username}>
-										{user.name}
-									</MenuItem>
-								))}
+								label="user"
+								onClick={handleClick}>
+								{usersLoading ? (
+									<Spinner animation="border" />
+								) : (
+									users.map((userData) => {
+										return (
+											<MenuItem value={user.username} key={userData.username}>
+											{userData.username}
+											</MenuItem>
+										);
+									})
+								)}
 							</Select>
 						</FormControl>
 					</Box>
