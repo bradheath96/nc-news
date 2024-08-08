@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { getArticle, getArticleComments, patchArticleById } from "../utils/api";
 import Image from "react-bootstrap/Image";
 import Spinner from "react-bootstrap/Spinner";
@@ -10,9 +10,12 @@ import IconButton from "@mui/material/IconButton";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import Alert from "@mui/material/Alert";
+import CommentAdder from "./Comment_adder";
+import { UserContext } from "./User_Context";
 
 const ArticlePage = () => {
 	const { article_id } = useParams();
+	const { user } = useContext(UserContext);
 	const [article, setArticle] = useState({});
 	const [comments, setComments] = useState([]);
 	const [loading, setLoading] = useState(true);
@@ -34,7 +37,6 @@ const ArticlePage = () => {
 			setLoading(false);
 		});
 	}, [article_id]);
-
 
 	const handleClick = (event) => {
 		event.preventDefault();
@@ -88,6 +90,7 @@ const ArticlePage = () => {
 					Something went wrong. Please try again.
 				</Alert>
 			) : null}
+			<CommentAdder setComments={setComments} article_id={article_id} />
 			<h5>Comments: {article.comment_count}</h5>
 			{comments.map((comment) => {
 				return <CommentCard comment={comment} key={comment.comment_id} />;
