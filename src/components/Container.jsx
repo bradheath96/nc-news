@@ -10,17 +10,39 @@ import AllTopicsPage from "./All_topics_page";
 const Container = ({ isLoading, setIsLoading, topics, setTopics }) => {
 	const { user, setUser } = useContext(UserContext);
 	const [articles, setArticles] = useState([]);
+	const [loading, setLoading] = useState(true);
+
 	return (
 		<div>
 			<Routes>
-				<Route path="/" element={<Home />} />
-				<Route path="/home" element={<Home />} />
+				<Route
+					path="/"
+					element={
+						<Home
+							articles={articles}
+							setArticles={setArticles}
+							isLoading={isLoading}
+							setLoading={setIsLoading}
+						/>
+					}
+				/>
+				<Route
+					path="/home"
+					element={
+						<Home
+							articles={articles}
+							setArticles={setArticles}
+							loading={isLoading}
+							setLoading={setIsLoading}
+						/>
+					}
+				/>
 				<Route
 					path="/articles/:article_id"
 					element={
 						<ArticlePage
-							isLoading={isLoading}
-							setIsLoading={setIsLoading}
+							loading={loading}
+							setLoading={setLoading}
 							user={user}
 						/>
 					}
@@ -34,7 +56,7 @@ const Container = ({ isLoading, setIsLoading, topics, setTopics }) => {
 							articles={articles}
 							setArticles={setArticles}
 							isLoading={isLoading}
-							setIsLoading={setIsLoading}
+							setLoading={setLoading}
 						/>
 					}
 				/>
