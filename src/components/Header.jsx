@@ -37,10 +37,6 @@ const Header = () => {
 								{capitaliseFirstLetter(topic.slug)}
 							</NavDropdown.Item>
 						))}
-						<NavDropdown.Divider />
-						<NavDropdown.Item as={Link} to="/topics">
-							All Topics
-						</NavDropdown.Item>
 					</NavDropdown>
 					<Nav.Link as={Link} to="/login">
 						Login
